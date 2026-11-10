@@ -1,0 +1,20 @@
+name: Check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate shell syntax
+        run: |
+          bash -n scripts/codex-scheduler.sh
+          bash -n tests/smoke.sh
+      - name: Test detached scheduling
+        run: bash tests/smoke.sh
